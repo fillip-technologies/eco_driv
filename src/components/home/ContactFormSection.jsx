@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { LocateFixed, CheckCircle2, PhoneCall } from 'lucide-react'
+import { LocateFixed, CheckCircle2, PhoneCall, Minus, Plus } from 'lucide-react'
 import formScooterImg from '../../assets/home/form-image.png'
 
 const models = [
@@ -8,12 +8,21 @@ const models = [
   { id: 'ecodriv-glide', label: 'Ecodriv Glide' },
 ]
 
-export default function ContactFormSection({ defaultModel = 'Ecodriv Apex', modelList = models }) {
+// showQuantity: adds a 'number of vehicles' field for bulk / business enquiries
+// image / imageAlt: picture shown beside the form (defaults to the scooter)
+export default function ContactFormSection({
+  defaultModel = 'Ecodriv Apex',
+  modelList = models,
+  showQuantity = false,
+  image = formScooterImg,
+  imageAlt = 'Ecodriv Electric Scooter',
+}) {
   const [selectedModel, setSelectedModel] = useState(defaultModel)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     pincode: '',
+    quantity: '',
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLocating, setIsLocating] = useState(false)
@@ -43,6 +52,14 @@ export default function ContactFormSection({ defaultModel = 'Ecodriv Apex', mode
     }
   }
 
+  // Stepper for the quantity field (minimum 1)
+  const changeQuantity = (delta) => {
+    setFormData((prev) => {
+      const current = parseInt(prev.quantity, 10) || 0
+      return { ...prev, quantity: String(Math.max(1, current + delta)) }
+    })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!formData.name.trim() || !formData.phone.trim()) return
@@ -70,13 +87,16 @@ export default function ContactFormSection({ defaultModel = 'Ecodriv Apex', mode
                   </div>
                   <h3 className="text-xl font-bold text-gray-950 mb-2">Request Received!</h3>
                   <p className="text-sm text-gray-600 leading-relaxed mb-6">
-                    Thank you, <span className="font-semibold text-gray-900">{formData.name}</span>. Our Ecodriv product specialist will contact you shortly regarding the <span className="font-semibold text-gray-900">{selectedModel}</span>.
+                    Thank you, <span className="font-semibold text-gray-900">{formData.name}</span>. Our Ecodriv product specialist will contact you shortly regarding the <span className="font-semibold text-gray-900">{selectedModel}</span>
+                    {showQuantity && formData.quantity && (
+                      <> for <span className="font-semibold text-gray-900">{formData.quantity} {Number(formData.quantity) === 1 ? 'vehicle' : 'vehicles'}</span></>
+                    )}.
                   </p>
                   <button
                     type="button"
                     onClick={() => {
                       setIsSubmitted(false)
-                      setFormData({ name: '', phone: '', pincode: '' })
+                      setFormData({ name: '', phone: '', pincode: '', quantity: '' })
                     }}
                     className="px-6 py-2.5 rounded-full bg-black text-white text-xs font-semibold hover:bg-gray-800 transition cursor-pointer"
                   >
@@ -135,12 +155,49 @@ export default function ContactFormSection({ defaultModel = 'Ecodriv Apex', mode
                     </button>
                   </div>
 
+                  {/* Quantity (business / bulk enquiries only) */}
+                  {showQuantity && (
+                    <div className="flex items-center bg-[#F3F4F7] hover:bg-[#EFF0F4] focus-within:bg-white text-gray-900 text-sm sm:text-base font-sans rounded-2xl pl-5 pr-2 py-2 border border-transparent focus-within:border-gray-300 transition-all duration-200">
+                      <input
+                        type="number"
+                        name="quantity"
+                        required
+                        min={1}
+                        step={1}
+                        inputMode="numeric"
+                        placeholder="Quantity (no. of vehicles)*"
+                        aria-label="Quantity (number of vehicles)"
+                        value={formData.quantity}
+                        onChange={handleChange}
+                        className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 py-2 focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                      />
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => changeQuantity(-1)}
+                          aria-label="Decrease quantity"
+                          className="w-9 h-9 rounded-xl bg-white text-gray-600 hover:bg-black hover:text-white flex items-center justify-center transition cursor-pointer shadow-xs"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => changeQuantity(1)}
+                          aria-label="Increase quantity"
+                          className="w-9 h-9 rounded-xl bg-white text-gray-600 hover:bg-black hover:text-white flex items-center justify-center transition cursor-pointer shadow-xs"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Model Selector */}
                   <div className="pt-2">
                     <label className="block text-sm font-semibold text-gray-800 mb-3">
                       Pick your model*
                     </label>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className={`grid gap-3 ${modelList.length % 3 === 0 ? 'grid-cols-3' : 'grid-cols-2'}`}>
                       {modelList.map((model) => {
                         const isSelected = selectedModel === model.label
                         return (
@@ -190,8 +247,8 @@ export default function ContactFormSection({ defaultModel = 'Ecodriv Apex', mode
 
               <div className="relative w-full max-w-[640px] lg:max-w-none flex justify-center">
                 <img
-                  src={formScooterImg}
-                  alt="Ecodriv Electric Scooter"
+                  src={image}
+                  alt={imageAlt}
                   className="w-full h-auto max-h-[520px] object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.12)] block transform lg:scale-105 transition-transform duration-700 hover:scale-110"
                   loading="lazy"
                 />

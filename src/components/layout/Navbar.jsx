@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronDown, X } from 'lucide-react'
 import logoImg from '../../assets/logo2.png'
@@ -138,6 +138,19 @@ export default function Navbar({ onBookTestRide }) {
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [mobileDropdown, setMobileDropdown] = useState(null)
 
+  // Desktop hover dropdowns: open instantly, close after a short delay so moving
+  // the mouse from the trigger down into the menu doesn't close it.
+  const closeTimerRef = useRef(null)
+  const openDropdown = (id) => {
+    clearTimeout(closeTimerRef.current)
+    setActiveDropdown(id)
+  }
+  const closeDropdown = () => {
+    clearTimeout(closeTimerRef.current)
+    closeTimerRef.current = setTimeout(() => setActiveDropdown(null), 200)
+  }
+  useEffect(() => () => clearTimeout(closeTimerRef.current), [])
+
   return (
     <>
       {/* ===== FLOATING PILL NAVBAR ===== */}
@@ -161,8 +174,8 @@ export default function Navbar({ onBookTestRide }) {
             {/* Personal Mobility Menu — desktop */}
             <div
               className="relative hidden lg:block"
-              onMouseEnter={() => setActiveDropdown('personal-mobility')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              onMouseEnter={() => openDropdown('personal-mobility')}
+              onMouseLeave={closeDropdown}
             >
               <button
                 type="button"
@@ -177,7 +190,7 @@ export default function Navbar({ onBookTestRide }) {
 
               {/* 6 Vehicles Product List Dropdown Menu */}
               {activeDropdown === 'personal-mobility' && (
-                <div className="absolute left-0 top-full mt-2 w-[550px] bg-white border border-[#E2E2E2] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-3.5 z-50">
+                <div className="absolute left-0 top-full mt-2 w-[550px] bg-white before:content-[''] before:absolute before:-top-3 before:left-0 before:right-0 before:h-3 border border-[#E2E2E2] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-3.5 z-50">
                   <div className="grid grid-cols-2 gap-2">
                     {personalVehicles.map((vehicle) => (
                       <Link
@@ -218,8 +231,8 @@ export default function Navbar({ onBookTestRide }) {
             {/* Commercial Mobility Menu — desktop */}
             <div
               className="relative hidden lg:block"
-              onMouseEnter={() => setActiveDropdown('commercial-mobility')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              onMouseEnter={() => openDropdown('commercial-mobility')}
+              onMouseLeave={closeDropdown}
             >
               <button
                 type="button"
@@ -234,7 +247,7 @@ export default function Navbar({ onBookTestRide }) {
 
               {/* Commercial Mobility Dropdown */}
               {activeDropdown === 'commercial-mobility' && (
-                <div className="absolute left-0 top-full mt-2 w-[580px] bg-white border border-[#E2E2E2] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-4 z-50">
+                <div className="absolute left-0 top-full mt-2 w-[580px] bg-white before:content-[''] before:absolute before:-top-3 before:left-0 before:right-0 before:h-3 border border-[#E2E2E2] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-4 z-50">
                   <div className="grid grid-cols-2 gap-4">
                     {/* 2 Wheelers (2) */}
                     <div>
@@ -339,8 +352,8 @@ export default function Navbar({ onBookTestRide }) {
             {/* Our Partners Dropdown — temporarily disabled
             <div
               className="relative hidden md:block"
-              onMouseEnter={() => setActiveDropdown('our-partners')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              onMouseEnter={() => openDropdown('our-partners')}
+              onMouseLeave={closeDropdown}
             >
               <button
                 type="button"
@@ -354,7 +367,7 @@ export default function Navbar({ onBookTestRide }) {
               </button>
 
               {activeDropdown === 'our-partners' && (
-                <div className="absolute right-0 top-full mt-2 w-[190px] bg-white border border-[#E2E2E2] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.1)] p-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="absolute right-0 top-full mt-2 w-[190px] bg-white before:content-[''] before:absolute before:-top-3 before:left-0 before:right-0 before:h-3 border border-[#E2E2E2] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.1)] p-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                   <div className="space-y-0.5">
                     {partnerCategories.map((partner) => {
                       const isInternal = partner.href.startsWith('/')

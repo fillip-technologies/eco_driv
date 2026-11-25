@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import BatterySwapSection from '../../components/common/BatterySwapSection'
 import DeliveryHeroSection from '../../components/commercial-mobility/delivery/DeliveryHeroSection'
 import DeliveryViewsSection from '../../components/commercial-mobility/delivery/DeliveryViewsSection'
 import DeliveryUseCasesSection from '../../components/commercial-mobility/delivery/DeliveryUseCasesSection'
@@ -18,9 +19,12 @@ export default function EcodrivDelivery({ onBookTestRide, modelId }) {
       <DeliveryViewsSection vehicle={vehicle} />
       <DeliveryUseCasesSection vehicle={vehicle} onBookTestRide={onBookTestRide} />
       <DeliverySpecsSection vehicle={vehicle} />
+      <BatterySwapSection vehicle={vehicle} variant="business" />
       <DeliveryWarehouseSection vehicle={vehicle} />
       <ContactFormSection
+        key={vehicle.id}
         defaultModel={vehicle.name}
+        showQuantity
         modelList={Object.values(COMMERCIAL_2W_MAP).map(v => ({ id: v.id, label: v.name }))}
       />
     </main>

@@ -2,15 +2,17 @@ import { useState, useRef, useEffect, useMemo } from 'react'
 import {
   Zap,
   BatteryCharging,
-  Gauge,
   Sliders,
-  ShieldCheck,
   Smartphone,
   Ruler,
 } from 'lucide-react'
 import gsap from 'gsap'
 import scooterProfileImg from '../../../assets/personal-mobility/view-2.png'
 import { DEFAULT_VEHICLE } from '../../../data/personalVehiclesData'
+
+// Only these spec tabs are shown. Add 'battery', 'chassis', 'dimensions' or 'tech'
+// back to this list to show those tabs again.
+const VISIBLE_TABS = ['performance']
 
 function getSpecCategories(vehicle) {
   return [
@@ -101,7 +103,10 @@ export default function ApexSpecsSection({ vehicle = DEFAULT_VEHICLE }) {
   const [activeTab, setActiveTab] = useState('performance')
   const contentRef = useRef(null)
 
-  const categories = useMemo(() => getSpecCategories(vehicle), [vehicle])
+  const categories = useMemo(
+    () => getSpecCategories(vehicle).filter((cat) => VISIBLE_TABS.includes(cat.id)),
+    [vehicle]
+  )
   const activeCategory = categories.find((cat) => cat.id === activeTab) || categories[0]
 
   useEffect(() => {
@@ -136,75 +141,9 @@ export default function ApexSpecsSection({ vehicle = DEFAULT_VEHICLE }) {
         </div>
 
         {/* =========================================================================
-            TOP 4 HERO BENCHMARK STAT CARDS
+            CATEGORY TABS SELECTOR (hidden when only one tab is visible)
            ========================================================================= */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5 mb-12 sm:mb-16">
-          
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-3">
-              <Gauge className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.topSpeed} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">km/h</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Top Speed
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Electronically limited
-            </div>
-          </div>
-
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-[#2B9346]/10 text-[#2B9346] flex items-center justify-center mb-3">
-              <Zap className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.acceleration}
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              0 to 40 km/h
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Instant launch acceleration
-            </div>
-          </div>
-
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
-              <ShieldCheck className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.range}
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Certified Range (IDC)
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              {vehicle.trueRange} TrueRange™
-            </div>
-          </div>
-
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
-              <BatteryCharging className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.chargingTime} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">min</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Fast Charging (0–80%)
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Hypercharger network
-            </div>
-          </div>
-
-        </div>
-
-        {/* =========================================================================
-            CATEGORY TABS SELECTOR
-           ========================================================================= */}
+        {categories.length > 1 && (
         <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-10 sm:mb-12">
           {categories.map((cat) => {
             const isActive = cat.id === activeTab
@@ -226,6 +165,7 @@ export default function ApexSpecsSection({ vehicle = DEFAULT_VEHICLE }) {
             )
           })}
         </div>
+        )}
 
         {/* =========================================================================
             SPECIFICATIONS TABLE & PROFILE DISPLAY

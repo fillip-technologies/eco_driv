@@ -235,10 +235,7 @@ export default function Footer({ onBookTestRide }) {
           {/* Legal Links */}
           <div className="flex items-center gap-5 text-gray-500">
             <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-gray-900 transition-colors">FAME II Subsidy</a>
-            <a href="#" className="hover:text-gray-900 transition-colors">Security</a>
-          </div>
+            <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>          </div>
 
           {/* Designed and Developed by Fillip Technologies */}
           <p className="text-center md:text-right text-gray-500">

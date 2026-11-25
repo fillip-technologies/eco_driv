@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import BatterySwapSection from '../../components/common/BatterySwapSection'
 import ApexHeroSection from '../../components/mobility/apex/ApexHeroSection'
 import ApexViewsSection from '../../components/mobility/apex/ApexViewsSection'
 import ApexSpecsSection from '../../components/mobility/apex/ApexSpecsSection'
@@ -16,6 +17,7 @@ export default function EcodrivApex({ onBookTestRide, modelId }) {
       <ApexHeroSection vehicle={vehicle} onBookTestRide={onBookTestRide} />
       <ApexViewsSection vehicle={vehicle} />
       <ApexSpecsSection vehicle={vehicle} />
+      <BatterySwapSection vehicle={vehicle} variant="personal" />
       <ApexCloseUpSection vehicle={vehicle} />
       <ApexColorsSection vehicle={vehicle} onBookTestRide={onBookTestRide} />
     </main>
