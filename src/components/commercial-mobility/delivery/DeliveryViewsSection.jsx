@@ -6,8 +6,6 @@ import { DEFAULT_COMMERCIAL_2W } from '../../../data/commercialVehiclesData'
 import view1Img from '../../../assets/personal-mobility/view-1.png'
 import view2Img from '../../../assets/personal-mobility/view-2.png'
 import view3Img from '../../../assets/personal-mobility/view-3.png'
-import view4Img from '../../../assets/personal-mobility/view-4.png'
-import view5Img from '../../../assets/personal-mobility/view-5.png'
 
 // Custom sleek vehicle orientation icons
 function FrontIcon({ className = 'w-5 h-5' }) {
@@ -47,17 +45,6 @@ function SideIcon({ className = 'w-5 h-5', flip = false }) {
   )
 }
 
-function TopIcon({ className = 'w-5 h-5' }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <ellipse cx="12" cy="12" rx="4" ry="8" />
-      <path d="M8 7h8" />
-      <path d="M10 17h4" />
-      <circle cx="12" cy="12" r="1.5" />
-    </svg>
-  )
-}
-
 const ALL_VIEWS = [
   {
     id: 'front',
@@ -69,7 +56,7 @@ const ALL_VIEWS = [
   },
   {
     id: 'rear',
-    label: 'Rear View',
+    label: 'Back View',
     image: view3Img,
     icon: RearIcon,
     stageClass: 'max-h-[380px] sm:max-h-[440px] lg:max-h-[480px]',
@@ -77,29 +64,12 @@ const ALL_VIEWS = [
   },
   {
     id: 'left',
-    label: 'Left View',
+    label: 'Side View',
     image: view2Img,
     icon: SideIcon,
     flipIcon: false,
     stageClass: 'max-h-[300px] sm:max-h-[360px] lg:max-h-[400px]',
     thumbClass: 'max-h-[75px] sm:max-h-[85px]',
-  },
-  {
-    id: 'right',
-    label: 'Right View',
-    image: view4Img,
-    icon: SideIcon,
-    flipIcon: true,
-    stageClass: 'max-h-[300px] sm:max-h-[360px] lg:max-h-[400px]',
-    thumbClass: 'max-h-[75px] sm:max-h-[85px]',
-  },
-  {
-    id: 'top',
-    label: 'Top View',
-    image: view5Img,
-    icon: TopIcon,
-    stageClass: 'max-h-[260px] sm:max-h-[310px] lg:max-h-[340px]',
-    thumbClass: 'max-h-[60px] sm:max-h-[70px]',
   },
 ]
 
@@ -122,7 +92,7 @@ export default function DeliveryViewsSection({ vehicle = DEFAULT_COMMERCIAL_2W }
   }, [activeId])
 
   return (
-    <section className="relative w-full py-16 sm:py-24 bg-gradient-to-b from-[#EBF8EE]/60 via-[#F7FAF8] to-white overflow-hidden select-none">
+    <section className="relative w-full py-16 sm:py-24 bg-gradient-to-b from-[#EBF8EE]/60 via-[#F7FAF8] to-white overflow-hidden">
       
       {/* Background Soft Glow Accents in Logo Colors */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-[#2B9346]/10 rounded-full blur-3xl pointer-events-none" />

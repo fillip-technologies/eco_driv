@@ -9,10 +9,11 @@ import EcodrivDelivery from './pages/commercial-mobility/EcodrivDelivery'
 import EcodrivCargo from './pages/commercial-mobility/EcodrivCargo'
 import ContactUs from './pages/ContactUs'
 import AboutUs from './pages/AboutUs'
-import FinancePartner from './pages/our-partner/FinancePartner'
-import BatteryPartner from './pages/our-partner/BatteryPartner'
-import IotPartner from './pages/our-partner/IotPartner'
-import TelematicsPartner from './pages/our-partner/TelematicsPartner'
+// Our Partner pages — temporarily disabled
+// import FinancePartner from './pages/our-partner/FinancePartner'
+// import BatteryPartner from './pages/our-partner/BatteryPartner'
+// import IotPartner from './pages/our-partner/IotPartner'
+// import TelematicsPartner from './pages/our-partner/TelematicsPartner'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/about-us" element={<Navigate to="/about" replace />} />
           <Route path="/contact" element={<ContactUs onBookTestRide={handleOpenTestRide} />} />
           <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
+          {/* Our Partner routes — temporarily disabled
           <Route path="/our-partner/finance-partner" element={<FinancePartner onBookTestRide={handleOpenTestRide} />} />
           <Route path="/our-partners/finance-partner" element={<Navigate to="/our-partner/finance-partner" replace />} />
           <Route path="/finance-partner" element={<Navigate to="/our-partner/finance-partner" replace />} />
@@ -89,6 +91,7 @@ export default function App() {
           <Route path="/our-partner/telematics-partner" element={<TelematicsPartner onBookTestRide={handleOpenTestRide} />} />
           <Route path="/our-partners/telematics-partner" element={<Navigate to="/our-partner/telematics-partner" replace />} />
           <Route path="/telematics-partner" element={<Navigate to="/our-partner/telematics-partner" replace />} />
+          */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 

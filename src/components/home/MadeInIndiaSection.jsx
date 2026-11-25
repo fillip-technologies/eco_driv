@@ -2,7 +2,7 @@ import madeInIndiaImg from '../../assets/home/made-in-india.png'
 
 export default function MadeInIndiaSection() {
   return (
-    <section id="made-in-india" className="w-full bg-white select-none overflow-hidden">
+    <section id="made-in-india" className="w-full bg-white overflow-hidden">
       <div className="w-full max-w-[1920px] mx-auto">
         <img
           src={madeInIndiaImg}

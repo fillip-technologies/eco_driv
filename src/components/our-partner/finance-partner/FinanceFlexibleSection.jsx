@@ -24,7 +24,7 @@ const features = [
 
 export default function FinanceFlexibleSection() {
   return (
-    <section className="py-16 sm:py-24 bg-white relative overflow-hidden select-none border-t border-gray-100">
+    <section className="py-16 sm:py-24 bg-white relative overflow-hidden border-t border-gray-100">
       
       {/* Background Soft Glow */}
       <div className="absolute top-1/2 left-10 w-96 h-96 bg-emerald-50/50 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />

@@ -24,7 +24,7 @@ export default function AboutHeroSection() {
   }
 
   return (
-    <section className="relative w-full h-[50vh] sm:h-[52vh] min-h-[340px] sm:min-h-[420px] max-h-[560px] overflow-hidden -mt-[88px] sm:-mt-[96px] bg-black select-none">
+    <section className="relative w-full h-[50vh] sm:h-[52vh] min-h-[340px] sm:min-h-[420px] max-h-[560px] overflow-hidden -mt-[88px] sm:-mt-[96px] bg-black">
       {/* Half-screen edge-to-edge video */}
       <video
         ref={videoRef}

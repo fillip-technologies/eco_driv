@@ -90,7 +90,7 @@ export default function EcodrivAppSection() {
     <section
       ref={containerRef}
       id="app"
-      className="pt-10 sm:pt-16 pb-20 sm:pb-28 bg-[#FAFAFC] relative overflow-hidden select-none border-t border-gray-100/80"
+      className="pt-10 sm:pt-16 pb-20 sm:pb-28 bg-[#FAFAFC] relative overflow-hidden border-t border-gray-100/80"
     >
       {/* 1. Precision Tech Dot Matrix Grid with Soft Radial Mask */}
       <div className="absolute inset-0 bg-[radial-gradient(#d4d4d8_1.2px,transparent_1.2px)] [background-size:24px_24px] pointer-events-none opacity-65 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_60%,#000_20%,transparent_100%)]" />

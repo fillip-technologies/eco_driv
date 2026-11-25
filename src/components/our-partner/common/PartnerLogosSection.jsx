@@ -17,7 +17,7 @@ const marqueeList = [...partnerLogos, ...partnerLogos, ...partnerLogos, ...partn
 
 export default function PartnerLogosSection() {
   return (
-    <section className="py-12 sm:py-16 bg-white relative overflow-hidden select-none">
+    <section className="py-12 sm:py-16 bg-white relative overflow-hidden">
       <style>{`
         @keyframes partnerMarquee {
           0% {

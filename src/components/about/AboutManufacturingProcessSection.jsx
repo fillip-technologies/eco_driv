@@ -37,7 +37,7 @@ const processSteps = [
 
 export default function AboutManufacturingProcessSection() {
   return (
-    <section className="py-16 sm:py-24 bg-white relative overflow-hidden select-none border-t border-gray-100">
+    <section className="py-16 sm:py-24 bg-white relative overflow-hidden border-t border-gray-100">
       
       {/* Subtle background ambient blur */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-72 bg-emerald-50/40 rounded-full blur-3xl pointer-events-none" />

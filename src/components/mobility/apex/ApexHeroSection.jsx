@@ -39,7 +39,7 @@ export default function ApexHeroSection({ onBookTestRide, vehicle = DEFAULT_VEHI
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[640px] max-h-[1080px] overflow-hidden bg-white select-none -mt-[88px] sm:-mt-[96px]"
+      className="relative w-full h-screen min-h-[640px] max-h-[1080px] overflow-hidden bg-white -mt-[88px] sm:-mt-[96px]"
     >
       {/* Full-Bleed Hero Image: Starts flush from the absolute top (y=0) behind floating navbar */}
       <img

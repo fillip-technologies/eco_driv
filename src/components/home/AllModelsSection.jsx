@@ -90,7 +90,7 @@ export default function AllModelsSection() {
   const currentTranslate = baseTranslate + slideOffset * slotWidthPercent
 
   return (
-    <section id="all-models" className="py-8 sm:py-10 bg-[#F4F4F6] relative overflow-hidden select-none border-t border-gray-200/80">
+    <section id="all-models" className="py-8 sm:py-10 bg-[#F4F4F6] relative overflow-hidden border-t border-gray-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading & Category Tabs */}
         <div className="text-center mb-6 sm:mb-8">

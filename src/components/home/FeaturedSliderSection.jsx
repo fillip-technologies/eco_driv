@@ -115,7 +115,7 @@ export default function FeaturedSliderSection() {
   const baseTranslateIndex = 1 - slideOffset
 
   return (
-    <section id="featured-lineup" className="py-12 sm:py-20 bg-white relative overflow-hidden select-none">
+    <section id="featured-lineup" className="py-12 sm:py-20 bg-white relative overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Slider Carousel Container */}
         <div

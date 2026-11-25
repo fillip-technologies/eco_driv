@@ -78,7 +78,7 @@ export default function ExploreBlogsSection() {
     <section
       ref={containerRef}
       id="blogs"
-      className="py-16 sm:py-24 bg-white relative overflow-hidden select-none border-t border-gray-100"
+      className="py-16 sm:py-24 bg-white relative overflow-hidden border-t border-gray-100"
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Row */}

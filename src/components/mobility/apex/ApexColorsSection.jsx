@@ -91,7 +91,7 @@ export default function ApexColorsSection({ onBookTestRide, vehicle = DEFAULT_VE
   }, [selectedColor, vehicle?.id])
 
   return (
-    <section className="relative w-full py-8 sm:py-12 bg-black select-none">
+    <section className="relative w-full py-8 sm:py-12 bg-black">
       <div className="max-w-[1360px] mx-auto px-3 sm:px-6">
         
         {/* =========================================================================

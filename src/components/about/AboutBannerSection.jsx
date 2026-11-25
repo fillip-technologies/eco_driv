@@ -15,7 +15,7 @@ export default function AboutBannerSection({ onBookTestRide }) {
   }
 
   return (
-    <section className="pt-12 sm:pt-16 pb-0 bg-white relative overflow-hidden select-none">
+    <section className="pt-12 sm:pt-16 pb-0 bg-white relative overflow-hidden">
       
       {/* Full Left & Right Gap via standard max-w container with padding */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

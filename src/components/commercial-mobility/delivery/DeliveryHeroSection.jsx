@@ -58,7 +58,7 @@ export default function DeliveryHeroSection({ onBookTestRide, vehicle = DEFAULT_
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[640px] max-h-[1080px] overflow-hidden bg-black select-none -mt-[88px] sm:-mt-[96px]"
+      className="relative w-full h-screen min-h-[640px] max-h-[1080px] overflow-hidden bg-black -mt-[88px] sm:-mt-[96px]"
     >
       {/* Full-bleed edge-to-edge Video */}
       <video

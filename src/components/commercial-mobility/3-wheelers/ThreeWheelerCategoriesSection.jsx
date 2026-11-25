@@ -28,7 +28,7 @@ const CATEGORIES = [
 
 export default function ThreeWheelerCategoriesSection({ onBookTestRide }) {
   return (
-    <section className="py-14 sm:py-20 bg-white relative overflow-hidden select-none border-t border-gray-100">
+    <section className="py-14 sm:py-20 bg-white relative overflow-hidden border-t border-gray-100">
       
       {/* Subtle background ambient glow */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-[#2B9346]/5 rounded-full blur-3xl pointer-events-none" />

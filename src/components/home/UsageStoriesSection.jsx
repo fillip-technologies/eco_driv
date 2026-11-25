@@ -29,7 +29,7 @@ const useCases = [
 
 export default function UsageStoriesSection() {
   return (
-    <section id="use-cases" className="pt-14 sm:pt-20 pb-6 sm:pb-8 bg-white relative overflow-hidden select-none">
+    <section id="use-cases" className="pt-14 sm:pt-20 pb-6 sm:pb-8 bg-white relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           {/* Left Column: Exactly matching reference text & layout */}

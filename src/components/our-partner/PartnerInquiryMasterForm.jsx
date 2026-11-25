@@ -80,7 +80,7 @@ export default function PartnerInquiryMasterForm({ partnerType = 'finance' }) {
   }
 
   return (
-    <section id="partner-form" className="py-16 sm:py-24 bg-[#FAFCFB] relative overflow-hidden select-none border-t border-gray-100">
+    <section id="partner-form" className="py-16 sm:py-24 bg-[#FAFCFB] relative overflow-hidden border-t border-gray-100">
       
       {/* Background Soft Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-emerald-50/50 rounded-full blur-3xl pointer-events-none" />

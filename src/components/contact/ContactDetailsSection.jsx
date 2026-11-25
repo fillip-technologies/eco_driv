@@ -33,7 +33,7 @@ export default function ContactDetailsSection({ onBookTestRide }) {
   }
 
   return (
-    <section className="py-16 sm:py-24 bg-[#FAFCFB] relative overflow-hidden select-none border-t border-gray-100">
+    <section className="py-16 sm:py-24 bg-[#FAFCFB] relative overflow-hidden border-t border-gray-100">
       
       {/* Background Soft Accent */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-50/60 rounded-full blur-3xl pointer-events-none" />

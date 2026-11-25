@@ -3,7 +3,7 @@ import contactHeroImg from '../../assets/contact-hero.png'
 
 export default function ContactHeroSection() {
   return (
-    <section className="relative w-full -mt-[88px] sm:-mt-[96px] pt-[104px] sm:pt-[118px] lg:pt-[128px] pb-12 sm:pb-16 lg:pb-18 bg-gray-950 overflow-hidden select-none">
+    <section className="relative w-full -mt-[88px] sm:-mt-[96px] pt-[104px] sm:pt-[118px] lg:pt-[128px] pb-12 sm:pb-16 lg:pb-18 bg-gray-950 overflow-hidden">
       
       {/* Background Hero Image with Enhanced Visibility */}
       <div className="absolute inset-0 z-0">

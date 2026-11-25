@@ -125,12 +125,13 @@ const commercial3Wheelers = [
   },
 ]
 
-const partnerCategories = [
-  { id: 'finance', title: 'Finance Partner', href: '/our-partner/finance-partner' },
-  { id: 'battery', title: 'Battery Partner', href: '/our-partner/battery-partner' },
-  { id: 'iot', title: 'IoT Partner', href: '/our-partner/iot-partner' },
-  { id: 'telematics', title: 'Telematics Partner', href: '/our-partner/telematics-partner' },
-]
+// Our Partners — temporarily disabled
+// const partnerCategories = [
+//   { id: 'finance', title: 'Finance Partner', href: '/our-partner/finance-partner' },
+//   { id: 'battery', title: 'Battery Partner', href: '/our-partner/battery-partner' },
+//   { id: 'iot', title: 'IoT Partner', href: '/our-partner/iot-partner' },
+//   { id: 'telematics', title: 'Telematics Partner', href: '/our-partner/telematics-partner' },
+// ]
 
 export default function Navbar({ onBookTestRide }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -335,7 +336,7 @@ export default function Navbar({ onBookTestRide }) {
               About Us
             </Link>
 
-            {/* Our Partners Dropdown */}
+            {/* Our Partners Dropdown — temporarily disabled
             <div
               className="relative hidden md:block"
               onMouseEnter={() => setActiveDropdown('our-partners')}
@@ -352,7 +353,6 @@ export default function Navbar({ onBookTestRide }) {
                 />
               </button>
 
-              {/* Partners Dropdown Menu */}
               {activeDropdown === 'our-partners' && (
                 <div className="absolute right-0 top-full mt-2 w-[190px] bg-white border border-[#E2E2E2] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.1)] p-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                   <div className="space-y-0.5">
@@ -382,6 +382,7 @@ export default function Navbar({ onBookTestRide }) {
                 </div>
               )}
             </div>
+            */}
 
             {/* Contact Us */}
             <Link
@@ -590,7 +591,7 @@ export default function Navbar({ onBookTestRide }) {
                 )}
               </div>
 
-              {/* 3. Our Partners Dropdown */}
+              {/* 3. Our Partners Dropdown — temporarily disabled
               <div className="py-2">
                 <button
                   type="button"
@@ -634,6 +635,7 @@ export default function Navbar({ onBookTestRide }) {
                   </div>
                 )}
               </div>
+              */}
 
               {/* 4. Direct Pages */}
               <div className="py-2.5 space-y-2">

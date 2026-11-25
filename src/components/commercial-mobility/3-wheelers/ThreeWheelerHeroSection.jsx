@@ -39,7 +39,7 @@ export default function ThreeWheelerHeroSection({ onBookTestRide, vehicle = DEFA
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[640px] max-h-[1080px] overflow-hidden bg-white select-none -mt-[88px] sm:-mt-[96px]"
+      className="relative w-full h-screen min-h-[640px] max-h-[1080px] overflow-hidden bg-white -mt-[88px] sm:-mt-[96px]"
     >
       {/* Full-Bleed 3-Wheelers Hero Image */}
       <img

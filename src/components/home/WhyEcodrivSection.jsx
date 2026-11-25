@@ -70,7 +70,7 @@ export default function WhyEcodrivSection() {
     <section
       ref={containerRef}
       id="why-ecodriv"
-      className="py-12 sm:py-16 bg-gradient-to-br from-emerald-50/50 via-white to-sky-50/40 relative overflow-hidden select-none border-y border-gray-100"
+      className="py-12 sm:py-16 bg-gradient-to-br from-emerald-50/50 via-white to-sky-50/40 relative overflow-hidden border-y border-gray-100"
     >
       {/* Soft Ambient Color Glows (No Grids, No Lines) */}
       <div className="absolute -top-32 right-10 w-[550px] h-[550px] bg-emerald-400/15 rounded-full blur-[130px] pointer-events-none" />

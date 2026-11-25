@@ -42,17 +42,6 @@ function SideIcon({ className = 'w-5 h-5', flip = false }) {
   )
 }
 
-function TopIcon({ className = 'w-5 h-5' }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <ellipse cx="12" cy="12" rx="4" ry="8" />
-      <path d="M8 7h8" />
-      <path d="M10 17h4" />
-      <circle cx="12" cy="12" r="1.5" />
-    </svg>
-  )
-}
-
 const ALL_VIEWS = [
   {
     id: 'front',
@@ -64,7 +53,7 @@ const ALL_VIEWS = [
   },
   {
     id: 'rear',
-    label: 'Rear View',
+    label: 'Back View',
     image: vehicles1Img,
     icon: RearIcon,
     stageClass: 'max-h-[340px] sm:max-h-[400px] lg:max-h-[440px]',
@@ -72,29 +61,12 @@ const ALL_VIEWS = [
   },
   {
     id: 'left',
-    label: 'Left View',
+    label: 'Side View',
     image: vehicles1Img,
     icon: SideIcon,
     flipIcon: false,
     stageClass: 'max-h-[320px] sm:max-h-[380px] lg:max-h-[420px]',
     thumbClass: 'max-h-[80px] sm:max-h-[90px]',
-  },
-  {
-    id: 'right',
-    label: 'Right View',
-    image: vehicles1Img,
-    icon: SideIcon,
-    flipIcon: true,
-    stageClass: 'max-h-[320px] sm:max-h-[380px] lg:max-h-[420px]',
-    thumbClass: 'max-h-[80px] sm:max-h-[90px]',
-  },
-  {
-    id: 'top',
-    label: 'Top View',
-    image: vehicles1Img,
-    icon: TopIcon,
-    stageClass: 'max-h-[280px] sm:max-h-[340px] lg:max-h-[370px]',
-    thumbClass: 'max-h-[70px] sm:max-h-[80px]',
   },
 ]
 
@@ -117,7 +89,7 @@ export default function ThreeWheelerViewsSection({ vehicle = DEFAULT_COMMERCIAL_
   }, [activeId, vehicle?.id])
 
   return (
-    <section className="relative w-full py-16 sm:py-24 bg-gradient-to-b from-[#EBF8EE]/60 via-[#F7FAF8] to-white overflow-hidden select-none">
+    <section className="relative w-full py-16 sm:py-24 bg-gradient-to-b from-[#EBF8EE]/60 via-[#F7FAF8] to-white overflow-hidden">
       
       {/* Background Soft Glow Accents in Logo Colors */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-[#2B9346]/10 rounded-full blur-3xl pointer-events-none" />

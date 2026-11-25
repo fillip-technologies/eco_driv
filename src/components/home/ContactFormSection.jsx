@@ -50,7 +50,7 @@ export default function ContactFormSection({ defaultModel = 'Ecodriv Apex', mode
   }
 
   return (
-    <section id="contact-form" className="py-16 sm:py-24 bg-white relative overflow-hidden select-none">
+    <section id="contact-form" className="py-16 sm:py-24 bg-white relative overflow-hidden">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Card Container */}
         <div className="bg-[#FAFBFD] border border-gray-200/80 rounded-3xl sm:rounded-[40px] p-6 sm:p-10 lg:p-14 shadow-[0_8px_40px_rgba(0,0,0,0.03)] relative overflow-hidden">

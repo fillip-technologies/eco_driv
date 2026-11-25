@@ -115,7 +115,7 @@ export default function ApexSpecsSection({ vehicle = DEFAULT_VEHICLE }) {
   }, [activeTab, vehicle?.id])
 
   return (
-    <section className="relative w-full py-16 sm:py-24 bg-white border-t border-gray-100 overflow-hidden select-none">
+    <section className="relative w-full py-16 sm:py-24 bg-white border-t border-gray-100 overflow-hidden">
       
       {/* Background Soft Accent Elements */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#2B9346]/5 rounded-full blur-3xl pointer-events-none" />

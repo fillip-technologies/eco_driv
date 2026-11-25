@@ -49,7 +49,7 @@ export default function ThreeWheelerColorsSection({ onBookTestRide, vehicle = DE
   }, [selectedColor, vehicle?.id])
 
   return (
-    <section className="relative w-full py-8 sm:py-14 bg-black select-none border-t border-gray-900">
+    <section className="relative w-full py-8 sm:py-14 bg-black border-t border-gray-900">
       <div className="max-w-[1360px] mx-auto px-3 sm:px-6">
         
         {/* =========================================================================
