@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { submitContact } from '../../lib/api'
 import {
+  Loader2,
   Mail,
   Phone,
   MapPin,
@@ -20,16 +23,43 @@ export default function ContactDetailsSection({ onBookTestRide }) {
     message: '',
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
+  const location = useLocation()
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.name.trim() || !formData.phone.trim()) return
-    setIsSubmitted(true)
+
+    const digits = formData.phone.replace(/\D/g, '').slice(-10)
+    if (!/^[6-9]\d{9}$/.test(digits)) {
+      setError('Please enter a valid 10-digit mobile number.')
+      return
+    }
+
+    setError('')
+    setIsSubmitting(true)
+    try {
+      await submitContact({
+        formType: 'contact',
+        name: formData.name.trim(),
+        phone: digits,
+        email: formData.email.trim(),
+        subject: formData.subject,
+        message: formData.message.trim(),
+        source: location.pathname,
+      })
+      setIsSubmitted(true)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -380,13 +410,20 @@ export default function ContactDetailsSection({ onBookTestRide }) {
                     />
                   </div>
 
+                  {error && (
+                    <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+                      {error}
+                    </p>
+                  )}
+
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-full bg-[#0F172A] hover:bg-[#2B9346] text-white text-sm font-bold transition-all shadow-md active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-full bg-[#0F172A] hover:bg-[#2B9346] text-white text-sm font-bold transition-all shadow-md active:scale-95 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Send Message to Ecodriv</span>
+                    {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                    <span>{isSubmitting ? 'Sending…' : 'Send Message to Ecodriv'}</span>
                   </button>
                 </form>
               )}

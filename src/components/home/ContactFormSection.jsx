@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { LocateFixed, CheckCircle2, PhoneCall, Minus, Plus } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { LocateFixed, CheckCircle2, PhoneCall, Minus, Plus, Loader2 } from 'lucide-react'
+import { submitContact } from '../../lib/api'
 import formScooterImg from '../../assets/home/form-image.png'
 
 const models = [
@@ -26,6 +28,9 @@ export default function ContactFormSection({
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLocating, setIsLocating] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
+  const location = useLocation()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -60,10 +65,33 @@ export default function ContactFormSection({
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.name.trim() || !formData.phone.trim()) return
-    setIsSubmitted(true)
+
+    const digits = formData.phone.replace(/\D/g, '').slice(-10)
+    if (!/^[6-9]\d{9}$/.test(digits)) {
+      setError('Please enter a valid 10-digit mobile number.')
+      return
+    }
+
+    setError('')
+    setIsSubmitting(true)
+    try {
+      await submitContact({
+        name: formData.name.trim(),
+        phone: digits,
+        pincode: formData.pincode.trim(),
+        model: selectedModel,
+        quantity: showQuantity ? formData.quantity : undefined,
+        source: location.pathname,
+      })
+      setIsSubmitted(true)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -219,12 +247,20 @@ export default function ContactFormSection({
                   </div>
 
                   {/* Submit Button */}
+                  {error && (
+                    <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-2xl px-4 py-3">
+                      {error}
+                    </p>
+                  )}
+
                   <div className="pt-4">
                     <button
                       type="submit"
-                      className="w-full py-4 rounded-full bg-[#E5E7EB] hover:bg-black hover:text-white text-gray-600 text-sm sm:text-base font-semibold transition-all duration-300 shadow-xs cursor-pointer active:scale-[0.99]"
+                      disabled={isSubmitting}
+                      className="w-full py-4 rounded-full bg-[#E5E7EB] hover:bg-black hover:text-white text-gray-600 text-sm sm:text-base font-semibold transition-all duration-300 shadow-xs cursor-pointer active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      Submit
+                      {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                      {isSubmitting ? 'Submitting…' : 'Submit'}
                     </button>
                   </div>
 

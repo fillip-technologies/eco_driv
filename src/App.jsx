@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
@@ -9,6 +9,8 @@ import EcodrivDelivery from './pages/commercial-mobility/EcodrivDelivery'
 import EcodrivCargo from './pages/commercial-mobility/EcodrivCargo'
 import ContactUs from './pages/ContactUs'
 import AboutUs from './pages/AboutUs'
+// Admin panel is loaded on demand so it doesn't add to the public site's bundle
+const AdminApp = lazy(() => import('./admin/AdminApp'))
 // Our Partner pages — temporarily disabled
 // import FinancePartner from './pages/our-partner/FinancePartner'
 // import BatteryPartner from './pages/our-partner/BatteryPartner'
@@ -23,6 +25,12 @@ function ScrollToTop() {
   return null
 }
 
+// Renders site chrome (navbar/footer) everywhere except the admin panel
+function PublicOnly({ children }) {
+  const { pathname } = useLocation()
+  return pathname.startsWith('/admin') ? null : children
+}
+
 export default function App() {
   const [isTestRideOpen, setIsTestRideOpen] = useState(false)
 
@@ -34,7 +42,9 @@ export default function App() {
       <ScrollToTop />
       <div className="min-h-screen bg-white text-gray-900 font-sans antialiased selection:bg-brand-mint selection:text-black">
         {/* Floating Ather Reference White Navbar */}
-        <Navbar onBookTestRide={handleOpenTestRide} />
+        <PublicOnly>
+          <Navbar onBookTestRide={handleOpenTestRide} />
+        </PublicOnly>
 
         {/* Page Routes */}
         <Routes>
@@ -92,11 +102,23 @@ export default function App() {
           <Route path="/our-partners/telematics-partner" element={<Navigate to="/our-partner/telematics-partner" replace />} />
           <Route path="/telematics-partner" element={<Navigate to="/our-partner/telematics-partner" replace />} />
           */}
+          {/* Admin panel */}
+          <Route
+            path="/admin/*"
+            element={
+              <Suspense fallback={<div className="min-h-screen bg-[#FAFBFD]" />}>
+                <AdminApp />
+              </Suspense>
+            }
+          />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 
         {/* Clean Light Footer */}
-        <Footer onBookTestRide={handleOpenTestRide} />
+        <PublicOnly>
+          <Footer onBookTestRide={handleOpenTestRide} />
+        </PublicOnly>
 
         {/* Book Test Ride Modal */}
         <TestRideModal isOpen={isTestRideOpen} onClose={handleCloseTestRide} />

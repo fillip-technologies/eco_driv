@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { X, CheckCircle2, ArrowRight } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { X, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react'
 import { SCOOTER_MODELS } from '../../constants/navigation'
+import { submitContact } from '../../lib/api'
 
 export default function TestRideModal({ isOpen, onClose }) {
   const [selectedModel, setSelectedModel] = useState(SCOOTER_MODELS[0].id)
@@ -8,6 +10,9 @@ export default function TestRideModal({ isOpen, onClose }) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
+  const location = useLocation()
 
   if (!isOpen) return null
 
@@ -22,14 +27,40 @@ export default function TestRideModal({ isOpen, onClose }) {
     'Kolkata',
   ]
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!name || !phone) return
-    setIsSubmitted(true)
+    if (!name.trim() || !phone.trim()) return
+
+    const digits = phone.replace(/\D/g, '').slice(-10)
+    if (!/^[6-9]\d{9}$/.test(digits)) {
+      setError('Please enter a valid 10-digit mobile number.')
+      return
+    }
+
+    const model = SCOOTER_MODELS.find((m) => m.id === selectedModel)
+    setError('')
+    setIsSubmitting(true)
+    try {
+      await submitContact({
+        formType: 'demo',
+        name: name.trim(),
+        phone: digits,
+        model: model?.name || selectedModel,
+        city,
+        source: location.pathname,
+      })
+      setIsSubmitted(true)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleReset = () => {
+    if (isSubmitting) return
     setIsSubmitted(false)
+    setError('')
     setName('')
     setPhone('')
     onClose()
@@ -128,12 +159,19 @@ export default function TestRideModal({ isOpen, onClose }) {
               </div>
             </div>
 
+            {error && (
+              <p role="alert" className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+                {error}
+              </p>
+            )}
+
             <button
               type="submit"
-              className="w-full py-3.5 rounded-full font-display font-bold text-xs uppercase tracking-wider text-white bg-black hover:bg-gray-800 transition shadow-md flex items-center justify-center gap-2 active:scale-95"
+              disabled={isSubmitting}
+              className="w-full py-3.5 rounded-full font-display font-bold text-xs uppercase tracking-wider text-white bg-black hover:bg-gray-800 transition shadow-md flex items-center justify-center gap-2 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <span>Confirm Test Ride Slot</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{isSubmitting ? 'Booking…' : 'Confirm Test Ride Slot'}</span>
+              {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
             </button>
           </form>
         ) : (
@@ -143,7 +181,7 @@ export default function TestRideModal({ isOpen, onClose }) {
             </div>
             <h4 className="text-2xl font-display font-black text-gray-900">Test Ride Confirmed!</h4>
             <p className="text-xs text-gray-600 max-w-sm mx-auto leading-relaxed">
-              Thank you, <strong className="text-gray-900">{name}</strong>. Our {city} Experience Center specialist will reach you at <span className="font-mono text-emerald-700 font-semibold">{phone}</span> with your booking pass.
+              Thank you, <strong className="text-gray-900">{name}</strong>. Our {city} Experience Center specialist will reach you at <span className="font-mono text-emerald-700 font-semibold">+91 {phone.replace(/\D/g, '').slice(-10)}</span> with your booking pass.
             </p>
             <button
               type="button"
