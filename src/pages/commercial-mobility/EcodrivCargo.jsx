@@ -3,6 +3,7 @@ import BatterySwapSection from '../../components/common/BatterySwapSection'
 import ThreeWheelerHeroSection from '../../components/commercial-mobility/3-wheelers/ThreeWheelerHeroSection'
 import ThreeWheelerViewsSection from '../../components/commercial-mobility/3-wheelers/ThreeWheelerViewsSection'
 import ThreeWheelerSpecsSection from '../../components/commercial-mobility/3-wheelers/ThreeWheelerSpecsSection'
+import ThreeWheelerCloseUpSection from '../../components/commercial-mobility/3-wheelers/ThreeWheelerCloseUpSection'
 import ThreeWheelerCategoriesSection from '../../components/commercial-mobility/3-wheelers/ThreeWheelerCategoriesSection'
 import ThreeWheelerColorsSection from '../../components/commercial-mobility/3-wheelers/ThreeWheelerColorsSection'
 import ContactFormSection from '../../components/home/ContactFormSection'
@@ -20,6 +21,7 @@ export default function EcodrivCargo({ onBookTestRide, modelId }) {
       <ThreeWheelerViewsSection vehicle={vehicle} />
       <ThreeWheelerSpecsSection vehicle={vehicle} />
       <BatterySwapSection vehicle={vehicle} variant="business" />
+      <ThreeWheelerCloseUpSection vehicle={vehicle} />
       <ThreeWheelerCategoriesSection vehicle={vehicle} onBookTestRide={onBookTestRide} />
       <ThreeWheelerColorsSection vehicle={vehicle} onBookTestRide={onBookTestRide} />
       <ContactFormSection

@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import {
   Zap,
   BatteryCharging,
-  Gauge,
   Sliders,
   Package,
   Smartphone,
@@ -12,11 +11,12 @@ import gsap from 'gsap'
 import scooterProfileImg from '../../../assets/personal-mobility/view-2.png'
 import { DEFAULT_COMMERCIAL_2W } from '../../../data/commercialVehiclesData'
 
-export default function DeliverySpecsSection({ vehicle = DEFAULT_COMMERCIAL_2W }) {
-  const [activeTab, setActiveTab] = useState('performance')
-  const contentRef = useRef(null)
+// Only these spec tabs are shown. Add 'battery', 'payload', 'chassis' or 'fleet-iot'
+// back to this list to show those tabs again.
+const VISIBLE_TABS = ['performance']
 
-  const SPEC_CATEGORIES = [
+function getSpecCategories(vehicle) {
+  return [
     {
       id: 'performance',
       label: 'Performance',
@@ -98,8 +98,17 @@ export default function DeliverySpecsSection({ vehicle = DEFAULT_COMMERCIAL_2W }
       ],
     },
   ]
+}
 
-  const activeCategory = SPEC_CATEGORIES.find((cat) => cat.id === activeTab) || SPEC_CATEGORIES[0]
+export default function DeliverySpecsSection({ vehicle = DEFAULT_COMMERCIAL_2W }) {
+  const [activeTab, setActiveTab] = useState('performance')
+  const contentRef = useRef(null)
+
+  const categories = useMemo(
+    () => getSpecCategories(vehicle).filter((cat) => VISIBLE_TABS.includes(cat.id)),
+    [vehicle]
+  )
+  const activeCategory = categories.find((cat) => cat.id === activeTab) || categories[0]
 
   useEffect(() => {
     if (contentRef.current) {
@@ -133,81 +142,11 @@ export default function DeliverySpecsSection({ vehicle = DEFAULT_COMMERCIAL_2W }
         </div>
 
         {/* =========================================================================
-            TOP 4 HERO BENCHMARK STAT CARDS
+            CATEGORY TABS SELECTOR (hidden when only one tab is visible)
            ========================================================================= */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5 mb-12 sm:mb-16">
-          
-          {/* Card 1: Top Speed */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
-              <Gauge className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.topSpeed} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">km/h</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Top Speed
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              High-efficiency hub drive
-            </div>
-          </div>
-
-          {/* Card 2: True Range */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
-              <BatteryCharging className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.trueRange.replace(' km', '')} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">km</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              TrueRange™
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Tested with full load
-            </div>
-          </div>
-
-          {/* Card 3: Payload Capacity */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-[#2B9346]/10 text-[#2B9346] flex items-center justify-center mb-3">
-              <Package className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.payload.replace(' kg', '')} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">kg</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Max Payload
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Reinforced subframe
-            </div>
-          </div>
-
-          {/* Card 4: Battery */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3">
-              <Zap className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.battery}
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Pack Capacity
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Swappable architecture
-            </div>
-          </div>
-
-        </div>
-
-        {/* =========================================================================
-            CATEGORY TABS SELECTOR
-           ========================================================================= */}
+        {categories.length > 1 && (
         <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-10 sm:mb-12">
-          {SPEC_CATEGORIES.map((cat) => {
+          {categories.map((cat) => {
             const isActive = cat.id === activeTab
             const IconComponent = cat.icon
             return (
@@ -227,6 +166,7 @@ export default function DeliverySpecsSection({ vehicle = DEFAULT_COMMERCIAL_2W }
             )
           })}
         </div>
+        )}
 
         {/* =========================================================================
             SPECIFICATIONS TABLE & PROFILE DISPLAY

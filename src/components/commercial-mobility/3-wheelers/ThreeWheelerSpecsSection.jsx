@@ -1,22 +1,21 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import {
   Zap,
   BatteryCharging,
-  Gauge,
   Sliders,
   Package,
   Smartphone,
-  ShieldCheck,
 } from 'lucide-react'
 import gsap from 'gsap'
 import vehicles1Img from '../../../assets/3-wheelers/vehicles-1.png'
 import { DEFAULT_COMMERCIAL_3W } from '../../../data/commercialVehiclesData'
 
-export default function ThreeWheelerSpecsSection({ vehicle = DEFAULT_COMMERCIAL_3W }) {
-  const [activeTab, setActiveTab] = useState('performance')
-  const contentRef = useRef(null)
+// Only these spec tabs are shown. Add 'battery', 'cargo', 'chassis' or 'iot'
+// back to this list to show those tabs again.
+const VISIBLE_TABS = ['performance']
 
-  const SPEC_CATEGORIES = [
+function getSpecCategories(vehicle) {
+  return [
     {
       id: 'performance',
       label: 'Performance & Power',
@@ -98,8 +97,17 @@ export default function ThreeWheelerSpecsSection({ vehicle = DEFAULT_COMMERCIAL_
       ],
     },
   ]
+}
 
-  const activeCategory = SPEC_CATEGORIES.find((cat) => cat.id === activeTab) || SPEC_CATEGORIES[0]
+export default function ThreeWheelerSpecsSection({ vehicle = DEFAULT_COMMERCIAL_3W }) {
+  const [activeTab, setActiveTab] = useState('performance')
+  const contentRef = useRef(null)
+
+  const categories = useMemo(
+    () => getSpecCategories(vehicle).filter((cat) => VISIBLE_TABS.includes(cat.id)),
+    [vehicle]
+  )
+  const activeCategory = categories.find((cat) => cat.id === activeTab) || categories[0]
 
   useEffect(() => {
     if (contentRef.current) {
@@ -133,77 +141,11 @@ export default function ThreeWheelerSpecsSection({ vehicle = DEFAULT_COMMERCIAL_
         </div>
 
         {/* =========================================================================
-            TOP 4 HERO BENCHMARK STAT CARDS
+            CATEGORY TABS SELECTOR (hidden when only one tab is visible)
            ========================================================================= */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5 mb-12 sm:mb-16">
-          
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
-              <Package className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.payload.replace(' kg', '')} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">kg</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Rated Payload
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Reinforced ladder frame
-            </div>
-          </div>
-
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
-              <ShieldCheck className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.trueRange.replace(' km', '')} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">km</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              True Range
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Tested with {vehicle.payload} load
-            </div>
-          </div>
-
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-3">
-              <Gauge className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.topSpeed} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">km/h</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Top Speed
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              High-torque differential
-            </div>
-          </div>
-
-          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#F8FAF9] to-white border border-gray-200/80 shadow-2xs hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center mb-3">
-              <BatteryCharging className="w-5 h-5" strokeWidth={2.6} />
-            </div>
-            <div className="text-2xl sm:text-3xl font-black font-sans text-black tracking-tight leading-none">
-              {vehicle.hours} <span className="text-xs sm:text-sm font-bold text-gray-700 font-mono">Hours</span>
-            </div>
-            <div className="text-xs font-bold text-gray-900 mt-2">
-              Fast Charge (0–100%)
-            </div>
-            <div className="text-[11px] text-gray-500 font-mono mt-0.5">
-              Commercial depot socket
-            </div>
-          </div>
-
-        </div>
-
-        {/* =========================================================================
-            CATEGORY TABS SELECTOR
-           ========================================================================= */}
+        {categories.length > 1 && (
         <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-10 sm:mb-12">
-          {SPEC_CATEGORIES.map((cat) => {
+          {categories.map((cat) => {
             const isActive = cat.id === activeTab
             const IconComponent = cat.icon
             return (
@@ -223,6 +165,7 @@ export default function ThreeWheelerSpecsSection({ vehicle = DEFAULT_COMMERCIAL_
             )
           })}
         </div>
+        )}
 
         {/* =========================================================================
             SPECIFICATIONS TABLE & PROFILE DISPLAY

@@ -4,6 +4,7 @@ import DeliveryHeroSection from '../../components/commercial-mobility/delivery/D
 import DeliveryViewsSection from '../../components/commercial-mobility/delivery/DeliveryViewsSection'
 import DeliveryUseCasesSection from '../../components/commercial-mobility/delivery/DeliveryUseCasesSection'
 import DeliverySpecsSection from '../../components/commercial-mobility/delivery/DeliverySpecsSection'
+import DeliveryCloseUpSection from '../../components/commercial-mobility/delivery/DeliveryCloseUpSection'
 import DeliveryWarehouseSection from '../../components/commercial-mobility/delivery/DeliveryWarehouseSection'
 import ContactFormSection from '../../components/home/ContactFormSection'
 import { COMMERCIAL_2W_MAP, DEFAULT_COMMERCIAL_2W } from '../../data/commercialVehiclesData'
@@ -20,6 +21,7 @@ export default function EcodrivDelivery({ onBookTestRide, modelId }) {
       <DeliveryUseCasesSection vehicle={vehicle} onBookTestRide={onBookTestRide} />
       <DeliverySpecsSection vehicle={vehicle} />
       <BatterySwapSection vehicle={vehicle} variant="business" />
+      <DeliveryCloseUpSection vehicle={vehicle} />
       <DeliveryWarehouseSection vehicle={vehicle} />
       <ContactFormSection
         key={vehicle.id}

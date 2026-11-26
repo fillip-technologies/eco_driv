@@ -99,7 +99,11 @@ function CloseUpCard({ item }) {
   )
 }
 
-export default function ApexCloseUpSection({ vehicle = DEFAULT_VEHICLE }) {
+export default function ApexCloseUpSection({
+  vehicle = DEFAULT_VEHICLE,
+  details = DETAILS,
+  subtitle,
+}) {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -140,13 +144,13 @@ export default function ApexCloseUpSection({ vehicle = DEFAULT_VEHICLE }) {
             Built Right, <span className="text-[#2B9346]">Down to Every Part</span>
           </h2>
           <p className="anim-closeup text-sm sm:text-base text-gray-600 mt-3 leading-relaxed">
-            A closer look at the components that make the {vehicle.name} ride the way it does.
+            {subtitle || `A closer look at the components that make the ${vehicle.name} ride the way it does.`}
           </p>
         </div>
 
         {/* Close-up grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 auto-rows-[170px] sm:auto-rows-[220px] lg:auto-rows-[240px] gap-3 sm:gap-5">
-          {DETAILS.map((item) => (
+          {details.map((item) => (
             <CloseUpCard key={item.id} item={item} />
           ))}
         </div>
